@@ -10,16 +10,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import reto4.reto4.models.usuario;
 import reto4.reto4.services.usuarioService;
 
+/**
+ * @author Jonathan David Mancera
+ */
+
 @RestController
 @RequestMapping("/api/user")
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST})
+@CrossOrigin(origins = "*")
 public class usuarioController {
     
     @Autowired
@@ -59,5 +62,16 @@ public class usuarioController {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Este método tiene como parámetros email y password utilizados en @pathVariable para relizar la solicitud get
+     * @param email
+     * @param password
+     * @return
+     */
+    @GetMapping("/{email}/{password}")
+    public usuario autenticarUsuario(@PathVariable("email") String email, @PathVariable String password) {
+        return uService.autenticarUsuario(email, password);
     }
 }

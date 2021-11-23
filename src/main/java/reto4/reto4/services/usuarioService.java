@@ -1,6 +1,7 @@
 package reto4.reto4.services;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,20 @@ public class usuarioService {
             return false;
         } else {
             return true;
+        }
+    }
+
+    public Optional<usuario> validarUsuario(String email, String password) {
+        return uRepo.findByEmailAndPassword(email, password);
+    }
+
+    public usuario autenticarUsuario(String email, String password) {
+        Optional<usuario> user = uRepo.findByEmailAndPassword(email, password);
+
+        if (user.isEmpty()) {
+            return new usuario(email, password,  "NO DEFINIDO");
+        } else {
+            return user.get();
         }
     }
 }
